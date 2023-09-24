@@ -956,7 +956,9 @@ def causality(
                     operator = replace(operator, prompt_template=prompt_template)
                 editor = dataclasses_utils.create_with_optional_kwargs(
                     editor_type,
-                    h_layer=cast(hparams.RelationHParams, relation_hparams).h_layer,
+                    h_layer=cast(
+                        hparams.RelationHParams, relation_hparams
+                    ).h_layer_edit,
                     rank=rank,
                     lre=operator,
                     svd=svd,
