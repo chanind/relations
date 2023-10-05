@@ -441,6 +441,8 @@ def faithfulness(
             logger.info(f"no hparams for {relation.name}; skipping")
             continue
         assert relation_hparams is not None
+        # we always want to use the layer_edit version, which is best for causality
+        relation_hparams = relation_hparams.use_layer_edit()
 
         logger.info("--------------------------------------------------------")
         logger.info(
@@ -882,6 +884,8 @@ def causality(
             logger.info(f"no hparams for {relation.name}; skipping")
             continue
         assert relation_hparams is not None
+        # we always want to use the layer_edit version, which is best for causality
+        relation_hparams = relation_hparams.use_layer_edit()
 
         estimator = dataclasses_utils.create_with_optional_kwargs(
             estimator_type,
@@ -956,9 +960,7 @@ def causality(
                     operator = replace(operator, prompt_template=prompt_template)
                 editor = dataclasses_utils.create_with_optional_kwargs(
                     editor_type,
-                    h_layer=cast(
-                        hparams.RelationHParams, relation_hparams
-                    ).h_layer_edit,
+                    h_layer=cast(hparams.RelationHParams, relation_hparams).h_layer,
                     rank=rank,
                     lre=operator,
                     svd=svd,

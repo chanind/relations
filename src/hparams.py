@@ -51,6 +51,17 @@ class RelationHParams(HParams):
         )
         self.save_json_file(file)
 
+    def use_layer_edit(self) -> "RelationHParams":
+        """Return a copy of this hparams with h_layer=h_layer_edit."""
+        return RelationHParams(
+            model_name=self.model_name,
+            relation_name=self.relation_name,
+            h_layer=self.h_layer_edit or self.h_layer,
+            beta=self.beta,
+            rank=self.rank,
+            z_layer=self.z_layer,
+        )
+
     @classmethod
     def from_relation(
         cls: type[RelationHParamsT],
